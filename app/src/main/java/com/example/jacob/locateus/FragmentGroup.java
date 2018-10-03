@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.jacob.locateus.Data.CurrentUser;
 import com.example.jacob.locateus.Data.Info;
+import com.example.jacob.locateus.Data.Members;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Member;
 import java.security.acl.Group;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,25 +56,24 @@ public class FragmentGroup extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                group_table = group_table.push();
                 Info group = new Info("My Group", 1);
+                DatabaseReference pushRef = database.getReference("Groups").push();
+
                 // group_table.push().child("Members").setValue(group);
-                String key = group_table.getKey();
-                Map<String,Object> taskMap = new HashMap<>();
-                taskMap.put("phoneNumber", CurrentUser.phonenumber);
-                taskMap.put("admin", true);
-                group_table.child("Members").updateChildren(taskMap);
-                group_table.child("Info").setValue(group);
+                String key = pushRef.getKey();
+                Log.e("Pr", "" + key);
+                pushRef.child("Members/phoneNumber").setValue(CurrentUser.phonenumber);
+                pushRef.child("Info").setValue(group);
             }
 
         });
-        displayGroups(view);
+         displayGroups(view);
         return view;
     }
 
     private void displayGroups(View view) {
 
-        Query query = FirebaseDatabase.getInstance().getReference("Groups");
+        Query query = FirebaseDatabase.getInstance().getReference("Groups").orderByChild("/Members/phoneNumber").equalTo(CurrentUser.phonenumber);
         ListView listOfMessage = (ListView)view.findViewById(R.id.groupList);
         FirebaseListOptions<Info> options = new FirebaseListOptions.Builder<Info>()
                 .setQuery(query, Info.class).setLayout(R.layout.group_item).build();
@@ -85,23 +86,33 @@ public class FragmentGroup extends Fragment {
                 //Get references to the views of list_item.xml
 
                 final String groupRef = getRef(position).getKey();
-                DatabaseReference group_table1 = database.getReference().child("Groups").child("Info");
+                DatabaseReference group_table1 = database.getReference().child("Groups");
                 group_table1.child(groupRef).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        final TextView messageText;
+                        final TextView messageText, groupCount;
+
                          messageText = (TextView) v.findViewById(R.id.groupName);
 
-
+                        groupCount = (TextView) v.findViewById(R.id.groupCount);
                         Log.e("Program", ""+model.getMemberCount() + model.getGroupName() + groupRef);
                         FirebaseDatabase.getInstance().getReference().child("Groups")
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            Info user = snapshot.child("Info").getValue(Info.class);
-                                            Log.e("Testing","" + snapshot.child("Info/groupName").getValue().toString());
-                                            messageText.setText(snapshot.child("Info/groupName").getValue().toString());
+
+
+                                                Info group = snapshot.child("Info").getValue(Info.class);
+                                                Members user = snapshot.child("Members").getValue(Members.class);
+                                                Log.e("Group", "" + user.getPhoneNumber());
+                                                if (user.getPhoneNumber().equals(CurrentUser.phonenumber)){
+                                                    Log.e("Group", "Found " + user.getPhoneNumber());
+                                                    messageText.setText(group.getGroupName());
+                                                    groupCount.setText("Members: " + group.getMemberCount());
+                                                }
+
+
                                         }
                                     }
                                     @Override

@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "669175849378",
+    "firebase_url": "https://locateus-873af.firebaseio.com",
+    "project_id": "locateus-873af",
+    "storage_bucket": "locateus-873af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669175849378:android:937d8b5b49bd621f",
+        "android_client_info": {
+          "package_name": "com.example.jacob.locateus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669175849378-q7pm3fsnfh6cb2rhufdqu9cr0mdup6pr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jacob.locateus",
+            "certificate_hash": "b132a28091e6d7f2d99a1968f2b04bae3d6e02f0"
+          }
+        },
+        {
+          "client_id": "669175849378-f1b24qb145ge3il11st2akfda1h7cjjl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAafBx_QZPqCdQVIz5CDeLOwtMNyeoDSgA"
+        },
+        {
+          "current_key": "AIzaSyAafBx_QZPqCdQVIz5CDeLOwtMNyeoDSgA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669175849378-f1b24qb145ge3il11st2akfda1h7cjjl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

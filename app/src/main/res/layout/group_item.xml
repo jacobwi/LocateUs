@@ -20,5 +20,17 @@
         android:drawableTint="#ffff"
         android:drawablePadding="18dp"/>
 
+    <TextView
+        android:id="@+id/groupCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-18dp"
+        android:layout_marginLeft="82dp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/groupName"
+        android:textSize="24px"
+        android:textStyle="italic"/>
+
+
 
 </RelativeLayout>

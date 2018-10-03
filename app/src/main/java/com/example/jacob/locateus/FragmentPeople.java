@@ -99,7 +99,7 @@ public class FragmentPeople extends Fragment {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                             Info user = snapshot.child("Members").getValue(Info.class);
-                                            Log.e("Testing","" + snapshot.child("Members/phoneNumber").getValue().toString());
+                                            Log.e("Testing","" + user.getGroupName());
                                             messageText.setText(snapshot.child("Members/phoneNumber").getValue().toString());
 
                                         }
